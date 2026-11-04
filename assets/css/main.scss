@@ -21,6 +21,7 @@ $border:     #DDE3EA;
 // One accent color per newsletter section.
 $sections: (
   "big-picture": #1C3A5E,   // Big picture
+  "also-this-week": #5B7DA8, // Big picture, second story
   "level-up":    #028090,   // AI acumen
   "try-this":    #E8A020,   // Use AI effectively
   "is-this-ok":  #E84855,   // Use AI ethically
@@ -155,8 +156,9 @@ main.wrap { flex: 1; }
 // "Why it matters to you:", "What to look for:", "My answer:"
 .block p > strong:first-child { color: $navy; }
 
-// Links in The Big Picture show as a button.
-.block-big-picture p:last-child > a:only-child {
+// Links in The Big Picture and Also This Week show as a button.
+.block-big-picture p:last-child > a:only-child,
+.block-also-this-week p:last-child > a:only-child {
   display: inline-block;
   padding: 8px 16px;
   background: $teal;
@@ -166,6 +168,13 @@ main.wrap { flex: 1; }
   font-weight: 600;
   &::after { content: " →"; }
   &:hover { background: $navy; }
+}
+
+// Optional image under the hero (from front matter)
+.issue-image {
+  margin: 0 0 4px;
+  img { display: block; width: 100%; border-radius: $radius; border: 1px solid $border; }
+  figcaption { margin-top: 6px; color: $body-gray; font-size: 0.85rem; font-style: italic; }
 }
 
 // The prompt box in Try This

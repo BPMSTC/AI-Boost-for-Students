@@ -12,6 +12,13 @@ layout: default
     {% if page.this_week %}<p class="this-week"><strong>This week:</strong> {{ page.this_week }}</p>{% endif %}
   </header>
 
+  {% if page.image %}
+  <figure class="issue-image">
+    <img src="{{ '/assets/images/issues/' | append: page.image | relative_url }}" alt="{{ page.image_alt | escape }}">
+    {% if page.image_credit %}<figcaption>{{ page.image_credit | escape }}</figcaption>{% endif %}
+  </figure>
+  {% endif %}
+
   {% comment %} Wrap each "## Section" and everything under it in a card. {% endcomment %}
   <div class="issue-body">
     {% assign parts = content | split: "<h2" %}
@@ -19,6 +26,7 @@ layout: default
       {% if forloop.first %}{{ part }}{% continue %}{% endif %}
       {% assign kind = "other" %}
       {% if part contains 'id="the-big-picture' %}{% assign kind = "big-picture" %}
+      {% elsif part contains 'id="also-this-week' %}{% assign kind = "also-this-week" %}
       {% elsif part contains 'id="level-up' %}{% assign kind = "level-up" %}
       {% elsif part contains 'id="try-this' %}{% assign kind = "try-this" %}
       {% elsif part contains 'id="is-this-ok' %}{% assign kind = "is-this-ok" %}

@@ -6,12 +6,24 @@ require "yaml"
 require "date"
 
 # Length limits keep every issue a ~3-minute read.
-MAX_TOTAL_WORDS   = 450 # whole issue, not counting the prompt itself
+MAX_TOTAL_WORDS   = 530 # whole issue, not counting the prompt itself
 MAX_SECTION_WORDS = 120 # any one section, not counting the prompt
-MAX_LINE_WORDS    = 30  # this_week and challenge
+MAX_ALSO_WORDS    = 80  # "Also This Week" is a short second story
+MAX_LINE_WORDS    = 30  # this_week, challenge, and image_alt
+
+# Issues dated before this used the original four-section format (450 words, no
+# "Also This Week"). They are still checked against that format so they keep passing.
+FIVE_SECTION_START = Date.new(2026, 11, 5)
+OLD_MAX_TOTAL_WORDS = 450
+
+# Optional image: stored in this folder, named in front matter, kept small for phones.
+IMAGE_DIR       = "assets/images/issues"
+IMAGE_TYPES     = %w[.jpg .jpeg .png .webp .gif].freeze
+MAX_IMAGE_BYTES = 300 * 1024
 
 SECTIONS = {
   "The Big Picture" => /\A## The Big Picture\s*\z/,
+  "Also This Week"  => /\A## Also This Week\s*\z/,
   "Level Up"        => /\A## Level Up: (Word of the Week|Myth vs\. Fact|Spot the Fake)\s*\z/,
   "Try This"        => /\A## Try This\s*\z/,
   "Is This OK?"     => /\A## Is This OK\? (Academic Honesty|Privacy)\s*\z/
@@ -46,6 +58,45 @@ end
   n = words(front[key].to_s)
   problems << "'#{key}' is #{n} words; keep it to #{MAX_LINE_WORDS} or fewer" if n > MAX_LINE_WORDS
 end
+# Older issues use the four-section format.
+issue_date = (Date.parse(front["date"].to_s) rescue nil)
+five_sections = issue_date.nil? || issue_date >= FIVE_SECTION_START
+sections = five_sections ? SECTIONS : SECTIONS.reject { |k, _| k == "Also This Week" }
+max_total = five_sections ? MAX_TOTAL_WORDS : OLD_MAX_TOTAL_WORDS
+
+# Optional image: if 'image' is set, it needs alt text and a credit, and the file must exist.
+image = front["image"].to_s.strip
+if image.empty?
+  %w[image_alt image_credit].each do |key|
+    problems << "'#{key}' is set but 'image' is not; add the image or remove '#{key}'" unless front[key].to_s.strip.empty?
+  end
+else
+  root = File.expand_path("..", __dir__)
+  file = File.join(root, IMAGE_DIR, image)
+  if image.include?("/")
+    problems << "'image' should be just the file name (e.g. 2026-11-11-week-11.jpg), stored in #{IMAGE_DIR}/"
+  elsif !IMAGE_TYPES.include?(File.extname(image).downcase)
+    problems << "'image' must be one of: #{IMAGE_TYPES.join(', ')}"
+  elsif !File.exist?(file)
+    problems << "Image file #{IMAGE_DIR}/#{image} doesn't exist"
+  elsif File.size(file) > MAX_IMAGE_BYTES
+    problems << "Image is #{File.size(file) / 1024} KB; keep it under #{MAX_IMAGE_BYTES / 1024} KB so it loads fast on phones " \
+                "(e.g. convert in.png -resize 1200x\\> -quality 80 out.jpg)"
+  end
+  alt = front["image_alt"].to_s.strip
+  if alt.empty?
+    problems << "'image_alt' is required with an image: one sentence describing it for screen readers"
+  elsif words(alt) > MAX_LINE_WORDS
+    problems << "'image_alt' is #{words(alt)} words; keep it to #{MAX_LINE_WORDS} or fewer"
+  end
+  if front["image_credit"].to_s.strip.empty?
+    problems << "'image_credit' is required with an image, e.g. 'Screenshot by Brent Presley' or 'AI-generated with <tool>'"
+  end
+end
+if body =~ /!\[[^\]]*\]\(/
+  problems << "Don't put images in the body; use the 'image', 'image_alt', and 'image_credit' front matter instead"
+end
+
 if text.include?("YYYY-MM-DD") || text.include?("https://example.com") || text =~ /Short headline for this week/
   problems << "Template placeholder text or links are still in the file"
 end
@@ -54,16 +105,17 @@ end
 chunks = body.split(/^(?=## )/).map(&:strip).reject(&:empty?)
 headings = chunks.map { |c| c.lines.first.strip }
 
-SECTIONS.each_with_index do |(name, pattern), i|
+positions = sections.map do |name, pattern|
   found = headings.index { |h| h =~ pattern }
-  if found.nil?
-    problems << "Missing or misnamed section '#{name}' (see _templates/issue-template.md for allowed headings)"
-  elsif found != i
-    problems << "Section '#{name}' is out of order; the order is: #{SECTIONS.keys.join(', ')}"
-  end
+  problems << "Missing or misnamed section '#{name}' (see _templates/issue-template.md for allowed headings)" if found.nil?
+  found
 end
-extra = headings.reject { |h| SECTIONS.values.any? { |p| h =~ p } }
-extra.each { |h| problems << "Unexpected section '#{h}'. Only the four standard sections are allowed" }
+found_positions = positions.compact
+if found_positions != found_positions.sort
+  problems << "Sections are out of order; the order is: #{sections.keys.join(', ')}"
+end
+extra = headings.reject { |h| sections.values.any? { |p| h =~ p } }
+extra.each { |h| problems << "Unexpected section '#{h}'. Only the #{sections.size} standard sections are allowed" }
 
 total = 0
 counts = {}
@@ -81,6 +133,9 @@ chunks.each do |chunk|
   when /The Big Picture/
     problems << "The Big Picture needs a link to the story" unless content =~ /\]\(https?:\/\//
     problems << "The Big Picture needs a '**Why it matters to you:**' line" unless content.include?("**Why it matters to you:**")
+  when /Also This Week/
+    problems << "Also This Week needs a link to the story" unless content =~ /\]\(https?:\/\//
+    problems << "'#{heading}' is #{n} words; keep it to #{MAX_ALSO_WORDS} or fewer" if n > MAX_ALSO_WORDS
   when /Try This/
     problems << "Try This needs the prompt in a ```text block" unless content =~ /```text\n.+?```/m
     problems << "Try This needs a '**What to look for:**' line" unless content.include?("**What to look for:**")
@@ -88,7 +143,7 @@ chunks.each do |chunk|
     problems << "Is This OK? needs a '**My answer:**' line" unless content.include?("**My answer:**")
   end
 end
-problems << "Issue is #{total} words; keep it to #{MAX_TOTAL_WORDS} or fewer" if total > MAX_TOTAL_WORDS
+problems << "Issue is #{total} words; keep it to #{max_total} or fewer" if total > max_total
 
 if problems.empty?
   puts "OK: #{path} (#{total} words, about #{total / 200 + 1} min read)"

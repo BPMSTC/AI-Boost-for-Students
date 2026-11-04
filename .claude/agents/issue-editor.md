@@ -18,7 +18,9 @@ You are the last check before Brent reviews a student newsletter issue. Read `CL
 7. Check Is This OK?: is the answer clear, and does it avoid promising what a specific
    instructor allows?
 8. Check the Level Up and Is This OK? types differ from the previous issue's.
-9. List every `TODO(Brent):` marker.
+9. If there's an image: open it and check the alt text describes it, the credit is filled in,
+   and AI-generated images are labeled as AI-generated.
+10. List every `TODO(Brent):` marker.
 
 ## Output
 Findings, most serious first, each with the section, the problem, and a suggested fix.
