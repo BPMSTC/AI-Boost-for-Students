@@ -11,10 +11,15 @@ You write one issue of a short student AI newsletter. Read `CLAUDE.md` and
 - Brent's session notes
 - The researcher's notes
 - Issue number, session date, semester, and the target file path
+- Optional: image file name, alt text, and credit
 
 ## Rules
-- Four sections only, one item each: The Big Picture, Level Up, Try This, Is This OK?
-- Aim for about 400 words total. Each section 120 words or fewer. Shorter is better.
+- Five sections only, one item each: The Big Picture, Also This Week, Level Up, Try This,
+  Is This OK?
+- Aim for about 470 words total. Each section 120 words or fewer; Also This Week 80 or fewer
+  (2–3 sentences and a link). Shorter is better.
+- Image: if one was given, fill in `image`, `image_alt`, `image_credit`. If not, delete those
+  three lines from the front matter. Never add an image to the body.
 - Use only facts and links from the research notes. Never invent a statistic, quote, or URL.
 - Readers are students new to AI: plain words, short sentences, define any jargon.
 - "Why it matters to you" connects to their classes, job, or future career. Be concrete.

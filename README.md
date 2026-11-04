@@ -4,22 +4,26 @@ A short weekly newsletter (about a 3-minute read) recapping the AI topics from o
 session at Mid-State Technical College. One issue per week of the semester, published at the
 project's GitHub Pages site.
 
-Each issue has four sections, one for each goal:
+Each issue has five sections:
 
 | Section | Goal |
 |---|---|
 | The Big Picture | What's happening in AI and why it matters to you |
+| Also This Week | A second, shorter news story with a link |
 | Level Up | AI acumen: a word of the week, myth vs. fact, or spot the fake |
 | Try This | Using AI effectively: one prompt to copy |
 | Is This OK? | Using AI ethically: academic honesty or privacy |
 
-Plus a one-line "This week" opener and one "Your Challenge" action.
+Plus a one-line "This week" opener, one "Your Challenge" action, and an optional image.
 
 ## Add this week's issue (by hand)
 1. Copy `_templates/issue-template.md` to `_issues/YYYY-MM-DD-short-name.md`
    (for example `_issues/2026-11-11-week-11.md`).
-2. Fill in the front matter and the four sections. Rotate the Level Up and Is This OK?
+2. Fill in the front matter and the five sections. Rotate the Level Up and Is This OK?
    types from last week's.
+   For an image, put it in `assets/images/issues/` (under 300 KB) and fill in `image`,
+   `image_alt` and `image_credit`. No image this week? Delete those three lines.
+   To shrink a big image: `convert big.png -resize 1200x\> -quality 80 small.jpg`
 3. Check it (it also checks length): `ruby scripts/check_issue.rb _issues/YYYY-MM-DD-short-name.md`
 4. Commit and push. The site updates in about a minute.
 

@@ -6,13 +6,14 @@ Mid-State Technical College. Each week's topics become one issue. Issues are pub
 GitHub Pages site built with Jekyll, with a homepage that lists every issue, grouped by semester.
 
 ## What students should get from it
-Every issue serves three goals, one section each:
-1. **AI big picture** — what's happening in AI and why it matters to them (The Big Picture)
+Every issue serves three goals:
+1. **AI big picture** — what's happening in AI and why it matters to them (The Big Picture,
+   plus a shorter second story in Also This Week)
 2. **AI acumen** — understanding how AI works and where it fails (Level Up)
 3. **Using AI effectively and ethically** — a prompt to try (Try This) and a judgment call
    (Is This OK?)
 
-It is deliberately short: about a 3-minute read on a phone. It is NOT the faculty
+It is deliberately short: about a 3-minute read on a phone. One optional image per issue. It is NOT the faculty
 Artificial Insights newsletter. Don't add faculty sections (Tool Drop, Ed Pulse, etc.).
 
 ## Audience and voice
@@ -29,6 +30,7 @@ Artificial Insights newsletter. Don't add faculty sections (Tool Drop, Ed Pulse,
 | `_issues/YYYY-MM-DD-short-name.md` | One file per weekly issue (the date is the session date) |
 | `_templates/issue-template.md` | Starting point for every new issue; copy it, never edit in place |
 | `_layouts/` | `default.html` (header/footer) and `issue.html` (wraps each section in a card) |
+| `assets/images/issues/` | The optional image for each issue (one per issue, under 300 KB) |
 | `assets/css/main.scss` | All styling. Colors are Sass variables at the top |
 | `assets/js/issue.js` | Adds a "Copy prompt" button to the Try This prompt |
 | `index.html` | Homepage: list of issues, newest first, grouped by `semester` |
@@ -41,15 +43,25 @@ See `_templates/issue-template.md`. `scripts/check_issue.rb` enforces these rule
 - Front matter: `title`, `issue` (number), `date` (matches the file name), `semester`
   (e.g. `Fall 2026`), `this_week` (one sentence), `challenge` (one action). The last two are
   30 words or fewer and are shown at the top and bottom of the page.
-- Exactly four sections, in this order, each with exactly one `###` headline:
+- Optional image: `image` (file name in `assets/images/issues/`, under 300 KB, about 1200 px
+  wide), `image_alt` (one sentence for screen readers, 30 words or fewer) and `image_credit`
+  (e.g. `Screenshot by Brent Presley`, `AI-generated with <tool>`). If `image` is set, the
+  other two are required. It shows under the page title. No images in the body. Only use
+  images Brent supplies or that are clearly free to use; never news-site photos. Label
+  AI-generated images as AI-generated.
+- Exactly five sections, in this order, each with exactly one `###` headline:
   1. `## The Big Picture` — one story, a `**Why it matters to you:**` line, and a link.
-  2. `## Level Up: <type>` — type rotates weekly: `Word of the Week`, `Myth vs. Fact`,
+  2. `## Also This Week` — a second, smaller story: 2–3 sentences and a link, 80 words or
+     fewer. No "why it matters" line.
+  3. `## Level Up: <type>` — type rotates weekly: `Word of the Week`, `Myth vs. Fact`,
      `Spot the Fake`.
-  3. `## Try This` — the prompt in a ```` ```text ```` block and a `**What to look for:**` line.
-  4. `## Is This OK? <type>` — type rotates: `Academic Honesty`, `Privacy`. Ends with a
+  4. `## Try This` — the prompt in a ```` ```text ```` block and a `**What to look for:**` line.
+  5. `## Is This OK? <type>` — type rotates: `Academic Honesty`, `Privacy`. Ends with a
      `**My answer:**` line.
-- Length: each section 120 words or fewer, whole issue 450 or fewer (prompt not counted).
-  Aim for about 400.
+- Length: each section 120 words or fewer, whole issue 530 or fewer (prompt not counted).
+  Aim for about 470.
+- Issues dated before 2026-11-05 used the old four-section, 450-word format; the checker
+  still checks them that way. Don't add Also This Week to them.
 - To rotate, look at the most recent issue in `_issues/` and pick a different type.
 
 ## Commands
