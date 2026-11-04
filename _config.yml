@@ -1,0 +1,39 @@
+# Site settings. Change the title and description here; every page picks them up.
+title: AI Boost for Students
+description: A weekly newsletter of the AI topics we covered in class, published for the students.
+author: Brent Presley
+college: Mid-State Technical College
+
+# Set baseurl to "/<repo-name>" for a GitHub Pages project site.
+# Leave url blank; GitHub Pages fills it in.
+baseurl: "/AI-Boost-for-Students"
+url: ""
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Each weekly issue is one file in _issues/
+collections:
+  issues:
+    output: true
+    permalink: /issues/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: issues
+    values:
+      layout: issue
+
+sass:
+  style: compressed
+
+exclude:
+  - README.md
+  - CLAUDE.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .claude

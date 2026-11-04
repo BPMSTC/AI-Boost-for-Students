@@ -1,0 +1,217 @@
+---
+# The empty front matter above tells Jekyll to turn this Sass file into main.css.
+---
+
+// ── Design tokens ─────────────────────────────────────────────
+// Matches the Artificial Insights slide deck palette.
+// Change a color here and every page updates.
+$navy:       #1C3A5E;
+$navy-deep:  #122035;
+$teal:       #028090;
+$teal-light: #90CAD6;
+$teal-pale:  #E6F4F6;
+$coral:      #E84855;
+$amber:      #E8A020;
+$body-dark:  #1A1A2E;
+$body-gray:  #4A5568;
+$page-bg:    #F7F9FB;
+$card-bg:    #FFFFFF;
+$border:     #DDE3EA;
+
+// One accent color per newsletter section (same order as the slides).
+$sections: (
+  "quick-scan":    #028090,
+  "tool-drop":     #1C3A5E,
+  "the-breakdown": #E84855,
+  "ed-pulse":      #1A5276,
+  "in-action":     #2C3E50,
+  "try-this":      #E8A020,
+  "whats-next":    #283047,
+  "extra":         #4A5568
+);
+
+$heading-font: Georgia, "Times New Roman", serif;
+$body-font: "Source Sans 3", Calibri, "Segoe UI", sans-serif;
+$radius: 10px;
+$max-width: 860px;
+
+// ── Base ──────────────────────────────────────────────────────
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $page-bg;
+  color: $body-dark;
+  font: 18px/1.65 $body-font;
+}
+
+h1, h2, h3 { font-family: $heading-font; line-height: 1.25; color: $navy; }
+a { color: $teal; }
+a:hover { color: $navy; }
+img { max-width: 100%; height: auto; }
+
+.wrap { max-width: $max-width; margin: 0 auto; padding: 0 16px; width: 100%; }
+main.wrap { flex: 1; }
+
+// ── Header and footer ────────────────────────────────────────
+.site-header {
+  background: $navy;
+  border-bottom: 4px solid $teal;
+  .wrap { display: flex; justify-content: space-between; align-items: center; min-height: 64px; }
+  a { color: #fff; text-decoration: none; }
+  .brand { font-family: $heading-font; font-weight: 700; font-size: 1.25rem; }
+  nav a { color: $teal-light; }
+  nav a:hover { color: #fff; }
+}
+
+.site-footer {
+  margin-top: 64px;
+  padding: 24px 0;
+  background: $navy-deep;
+  color: $teal-light;
+  font-size: 0.9rem;
+}
+
+// ── Homepage ─────────────────────────────────────────────────
+.intro { padding: 40px 0 8px; }
+.intro p { color: $body-gray; font-size: 1.1rem; }
+.empty { color: $body-gray; font-style: italic; }
+
+.semester h2 {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: $teal;
+  border-bottom: 2px solid $border;
+  padding-bottom: 6px;
+}
+
+.issue-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li + li { margin-top: 10px; }
+  a {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 12px;
+    align-items: baseline;
+    padding: 14px 18px;
+    background: $card-bg;
+    border: 1px solid $border;
+    border-left: 4px solid $teal;
+    border-radius: $radius;
+    text-decoration: none;
+    color: $body-dark;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  a:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba($navy, 0.12); }
+  .num { font-weight: 700; color: $teal; }
+  .title { font-family: $heading-font; font-weight: 700; color: $navy; }
+  .date { color: $body-gray; font-size: 0.9rem; white-space: nowrap; }
+}
+
+// ── Issue page ───────────────────────────────────────────────
+.issue-hero {
+  margin: 32px 0 24px;
+  padding: 32px;
+  background: $navy;
+  border-radius: $radius;
+  color: #fff;
+  h1 { color: #fff; margin: 0; font-size: 2.1rem; }
+  .issue-meta { margin: 0 0 8px; color: $teal-light; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; }
+}
+
+// The opening paragraph is the week's throughline.
+.issue-body > p:first-child {
+  font-size: 1.2rem;
+  color: $body-gray;
+  border-left: 4px solid $teal;
+  padding-left: 16px;
+}
+
+// Section headings ("## Quick Scan", "## Tool Drop", ...)
+.issue-body h2 {
+  margin: 48px 0 16px;
+  padding: 10px 16px;
+  border-radius: $radius;
+  color: #fff;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: map-get($sections, "extra");
+}
+
+@each $name, $color in $sections {
+  .issue-body h2.section-#{$name} { background: $color; }
+  .issue-body .section-#{$name} .card { border-top-color: $color; }
+}
+
+// Each "- **Title:** ..." list item becomes a card (see assets/js/issue.js).
+.issue-body ul.cards { list-style: none; padding: 0; margin: 0; display: grid; gap: 20px; }
+
+.card {
+  background: $card-bg;
+  border: 1px solid $border;
+  border-top: 5px solid $teal;
+  border-radius: $radius;
+  padding: 20px 24px;
+  h3 { margin: 0 0 10px; font-size: 1.25rem; }
+  figure { margin: 0 0 14px; }
+  figure img { border-radius: 6px; display: block; }
+  figcaption { font-size: 0.85rem; color: $body-gray; margin-top: 4px; }
+  .label {
+    display: block;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $teal;
+  }
+  p { margin: 4px 0 0; }
+  .prompt {
+    margin-top: 6px;
+    padding: 14px 16px;
+    background: #FFF7E6;
+    border-left: 4px solid $amber;
+    border-radius: 6px;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+  }
+  .button {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 16px;
+    background: $teal;
+    color: #fff;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .button:hover { background: $navy; color: #fff; }
+}
+
+// Plain bullet lists (follow-up tasks, extra reads)
+.issue-body ul:not(.cards) li { margin-bottom: 8px; }
+
+.issue-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid $border;
+}
+
+// ── Phones ───────────────────────────────────────────────────
+@media (max-width: 600px) {
+  body { font-size: 17px; }
+  .issue-hero { padding: 22px; h1 { font-size: 1.6rem; } }
+  .issue-list a { grid-template-columns: 44px 1fr; }
+  .issue-list .date { grid-column: 2; }
+  .card { padding: 16px; }
+}

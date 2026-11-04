@@ -1,0 +1,29 @@
+---
+layout: default
+---
+{% assign issue_name = page.path | split: "/" | last | remove: ".md" %}
+<article class="issue" data-image-dir="{{ '/assets/images/issues/' | append: issue_name | append: '/' | relative_url }}">
+  <header class="issue-hero">
+    <p class="issue-meta">
+      Issue {{ page["Issue Number"] }} · {{ page.date | date: "%B %-d, %Y" }}{% if page.semester %} · {{ page.semester }}{% endif %}
+    </p>
+    <h1>{{ page.Title }}</h1>
+  </header>
+
+  <div class="issue-body">
+    {{ content }}
+  </div>
+
+  {% assign sorted = site.issues | sort: "date" %}
+  {% for item in sorted %}
+    {% if item.url == page.url %}
+      {% assign prev_index = forloop.index0 | minus: 1 %}
+      {% assign next_index = forloop.index0 | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+  <nav class="issue-nav">
+    {% if prev_index >= 0 %}<a href="{{ sorted[prev_index].url | relative_url }}">← Previous issue</a>{% else %}<span></span>{% endif %}
+    {% if sorted[next_index] %}<a href="{{ sorted[next_index].url | relative_url }}">Next issue →</a>{% endif %}
+  </nav>
+</article>
+<script src="{{ '/assets/js/issue.js' | relative_url }}" defer></script>
