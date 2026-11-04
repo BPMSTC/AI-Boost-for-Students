@@ -13,7 +13,7 @@ challenge: Take one difficult concept from your homework this week and have an A
 
 Google introduced updates to its educational tools this week that deliberately stop AI from giving students instant, pre-written answers. Instead, the system asks guiding questions, gives step-by-step hints, and prompts students to explain their thinking before moving forward.
 
-**Why it matters to you:** In both college and future jobs, success won't come from letting a computer do your thinking. Learning how to be actively coached by AI helps you master challenging material much faster.
+**Why it matters to you:** In both college and future jobs, success will come from collaborating with AI, rather than letting a computer do your thinking. Learning how to be actively coached by AI helps you master challenging material much faster.
 
 [Read Google's announcement](https://blog.google/products-and-platforms/products/education/ai-learning-era-updates-2026/)
 
@@ -23,7 +23,7 @@ Google introduced updates to its educational tools this week that deliberately s
 
 **Myth:** The smartest way to use an AI tool for school is having it write your first draft or solve problems for you.
 
-**Fact:** Research shows passive copying hurts retention and critical thinking. The most effective approach is treating AI as an interactive tutor that quizzes you, pokes holes in your arguments, and checks your understanding before you sit down to write.
+**Fact:** Research shows passive copying hurts retention and critical thinking. The most effective approach is treating AI as an interactive partner that quizzes you, pokes holes in your arguments, and checks your understanding before you sit down to write.
 
 ## Try This
 
@@ -47,4 +47,4 @@ Concept: [Paste your confusing topic, paragraph, or concept here]
 
 You have a 1,000-word reflection essay due. You paste the assignment prompt into an AI tool and ask: "Give me an outline with three main talking points and help me brainstorm ideas based on my lecture notes."
 
-**My answer:** Yes, this is generally fine and often encouraged as a pre-writing strategy. Brainstorming an outline is like discussing project ideas with a tutor or classmate. The line is crossed only if you ask the tool to write the actual sentences or paragraphs you submit as your own work.
+**My answer:** No and Yes, before asking AI for assistance like this, include your thoughts in the prompt.  Give your thoughts and asking for brainstorming is often encouraged as a pre-writing strategy. Brainstorming an outline is like discussing project ideas with a tutor or classmate. The line is crossed only if you ask the tool to write the actual sentences or paragraphs you submit as your own work.
