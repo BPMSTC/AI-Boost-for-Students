@@ -3,7 +3,7 @@
 ---
 
 // ── Design tokens ─────────────────────────────────────────────
-// Matches the Artificial Insights slide deck palette.
+// Navy and teal palette shared with the faculty newsletter.
 // Change a color here and every page updates.
 $navy:       #1C3A5E;
 $navy-deep:  #122035;
@@ -18,16 +18,13 @@ $page-bg:    #F7F9FB;
 $card-bg:    #FFFFFF;
 $border:     #DDE3EA;
 
-// One accent color per newsletter section (same order as the slides).
+// One accent color per newsletter section.
 $sections: (
-  "quick-scan":    #028090,
-  "tool-drop":     #1C3A5E,
-  "the-breakdown": #E84855,
-  "ed-pulse":      #1A5276,
-  "in-action":     #2C3E50,
-  "try-this":      #E8A020,
-  "whats-next":    #283047,
-  "extra":         #4A5568
+  "big-picture": #1C3A5E,   // Big picture
+  "level-up":    #028090,   // AI acumen
+  "try-this":    #E8A020,   // Use AI effectively
+  "is-this-ok":  #E84855,   // Use AI ethically
+  "other":       #4A5568
 );
 
 $heading-font: Georgia, "Times New Roman", serif;
@@ -111,98 +108,104 @@ main.wrap { flex: 1; }
   a:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba($navy, 0.12); }
   .num { font-weight: 700; color: $teal; }
   .title { font-family: $heading-font; font-weight: 700; color: $navy; }
+  .title small { display: block; margin-top: 2px; font-family: $body-font; font-weight: 400; font-size: 0.95rem; color: $body-gray; }
   .date { color: $body-gray; font-size: 0.9rem; white-space: nowrap; }
 }
 
 // ── Issue page ───────────────────────────────────────────────
 .issue-hero {
   margin: 32px 0 24px;
-  padding: 32px;
+  padding: 28px 32px;
   background: $navy;
   border-radius: $radius;
   color: #fff;
-  h1 { color: #fff; margin: 0; font-size: 2.1rem; }
+  h1 { color: #fff; margin: 0; font-size: 2rem; }
   .issue-meta { margin: 0 0 8px; color: $teal-light; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; }
+  .this-week { margin: 14px 0 0; color: #E3EEF5; font-size: 1.05rem; }
+  .this-week strong { color: $teal-light; }
 }
 
-// The opening paragraph is the week's throughline.
-.issue-body > p:first-child {
-  font-size: 1.2rem;
-  color: $body-gray;
-  border-left: 4px solid $teal;
-  padding-left: 16px;
-}
-
-// Section headings ("## Quick Scan", "## Tool Drop", ...)
-.issue-body h2 {
-  margin: 48px 0 16px;
-  padding: 10px 16px;
+// Each "## Section" becomes a card (the issue layout wraps it in <section class="block">).
+.block {
+  margin-top: 20px;
+  padding: 4px 24px 22px;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-top: 6px solid map-get($sections, "other");
   border-radius: $radius;
-  color: #fff;
-  font-size: 1.3rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  background: map-get($sections, "extra");
+
+  h2 {
+    margin: 16px 0 4px;
+    font-family: $body-font;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: map-get($sections, "other");
+  }
+  h3 { margin: 4px 0 10px; font-size: 1.3rem; }
+  p { margin: 10px 0 0; }
 }
 
 @each $name, $color in $sections {
-  .issue-body h2.section-#{$name} { background: $color; }
-  .issue-body .section-#{$name} .card { border-top-color: $color; }
+  .block-#{$name} { border-top-color: $color; }
+  .block-#{$name} h2 { color: $color; }
 }
 
-// Each "- **Title:** ..." list item becomes a card (see assets/js/issue.js).
-.issue-body ul.cards { list-style: none; padding: 0; margin: 0; display: grid; gap: 20px; }
+// "Why it matters to you:", "What to look for:", "My answer:"
+.block p > strong:first-child { color: $navy; }
 
-.card {
-  background: $card-bg;
-  border: 1px solid $border;
-  border-top: 5px solid $teal;
+// Links in The Big Picture show as a button.
+.block-big-picture p:last-child > a:only-child {
+  display: inline-block;
+  padding: 8px 16px;
+  background: $teal;
+  color: #fff;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  &::after { content: " →"; }
+  &:hover { background: $navy; }
+}
+
+// The prompt box in Try This
+.issue-body pre {
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  background: #FFF7E6;
+  border-left: 4px solid $amber;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  font-size: 0.95rem;
+  code { font-family: ui-monospace, Consolas, monospace; background: none; }
+}
+.copy {
+  margin-top: 8px;
+  padding: 6px 14px;
+  border: 1px solid $amber;
+  background: #fff;
+  color: $body-dark;
+  border-radius: 999px;
+  font: 600 0.9rem $body-font;
+  cursor: pointer;
+  &:hover { background: #FFF7E6; }
+}
+
+// Your Challenge (from front matter)
+.challenge {
+  margin-top: 20px;
+  padding: 18px 24px;
+  background: $teal;
+  color: #fff;
   border-radius: $radius;
-  padding: 20px 24px;
-  h3 { margin: 0 0 10px; font-size: 1.25rem; }
-  figure { margin: 0 0 14px; }
-  figure img { border-radius: 6px; display: block; }
-  figcaption { font-size: 0.85rem; color: $body-gray; margin-top: 4px; }
-  .label {
-    display: block;
-    margin-top: 12px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: $teal;
-  }
-  p { margin: 4px 0 0; }
-  .prompt {
-    margin-top: 6px;
-    padding: 14px 16px;
-    background: #FFF7E6;
-    border-left: 4px solid $amber;
-    border-radius: 6px;
-    font-family: ui-monospace, Consolas, monospace;
-    font-size: 0.95rem;
-    white-space: pre-wrap;
-  }
-  .button {
-    display: inline-block;
-    margin-top: 16px;
-    padding: 8px 16px;
-    background: $teal;
-    color: #fff;
-    border-radius: 999px;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .button:hover { background: $navy; color: #fff; }
+  h2 { margin: 0 0 4px; color: #fff; font-size: 1.15rem; }
+  p { margin: 0; }
 }
-
-// Plain bullet lists (follow-up tasks, extra reads)
-.issue-body ul:not(.cards) li { margin-bottom: 8px; }
 
 .issue-nav {
   display: flex;
   justify-content: space-between;
-  margin-top: 48px;
+  margin-top: 40px;
   padding-top: 16px;
   border-top: 1px solid $border;
 }
@@ -211,7 +214,7 @@ main.wrap { flex: 1; }
 @media (max-width: 600px) {
   body { font-size: 17px; }
   .issue-hero { padding: 22px; h1 { font-size: 1.6rem; } }
+  .block { padding: 4px 16px 18px; }
   .issue-list a { grid-template-columns: 44px 1fr; }
   .issue-list .date { grid-column: 2; }
-  .card { padding: 16px; }
 }

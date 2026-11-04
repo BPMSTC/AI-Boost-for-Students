@@ -1,65 +1,45 @@
 ---
-Issue Date: YYYY-MM-DD
-Issue Number: N
-Title: One-line headline for this week's theme
+title: Short headline for this week
+issue: N
 date: YYYY-MM-DD
 semester: Fall 2026
+this_week: One sentence on what this week's session was about.
+challenge: One thing to do before next week's session.
 ---
 
-One-paragraph throughline: what tied this week's session together and why it matters to students. Keep it to two or three sentences.
+## The Big Picture
 
-## Quick Scan
+### Headline of the one story that matters most this week
 
-- **Title:** Article headline
-  **Teaser:** Two or three sentences on what happened and why a student should care.
-  **LinkText:** Read the full story
-  **URL:** https://example.com
-  **ArticleImage:** image-filename.jpg
-  **ArticleImageCaption:** Caption text for the image.
+Two or three sentences on what happened, in plain words. (About 60 words.)
 
-## Tool Drop
+**Why it matters to you:** One or two sentences tying it to students' lives or careers.
 
-- **Title:** Tool Name — Punchy Tagline
-  **TheNews:** What the tool does.
-  **MyTake:** Brent's take on the tool and who should try it.
-  **URL:** https://tool.example.com
+[Read the story](https://example.com)
 
-## The Breakdown
+## Level Up: Word of the Week
 
-- **Title:** The biggest AI story this week
-  **Analysis:** A few paragraphs of analysis.
-  **TheLesson:** The one-sentence takeaway.
-  **LinkText:** Read more
-  **URL:** https://example.com
+### The term
 
-## Ed Pulse
-
-- **Title:** Education item headline
-  **Content:** What's happening in education. Include percentages if the story is stat-driven.
-  **URL:** https://example.com
-
-## In Action
-
-- **Title:** Tool or workflow headline
-  **Content:** What we demonstrated in class.
-  **LinkText:** Watch the demo
-  **URL:** https://example.com
+A plain-words definition and one everyday example. (About 60 words.)
+Rotate the heading each week: `Level Up: Word of the Week`, `Level Up: Myth vs. Fact`,
+or `Level Up: Spot the Fake`.
 
 ## Try This
 
-- **Title:** Experiment title
-  **Intro:** Why this experiment is worth ten minutes of your time.
-  **ThePrompt:** The exact prompt students should paste in.
-  **URL:** https://example.com
+### What the prompt helps you do
 
-## Follow-up heading: How can AI help me?
+One sentence on when to use it.
 
-## Follow-up tasks
+```text
+The exact prompt students copy and paste.
+```
 
-- Task description with **bolded keywords** for emphasis.
-- Task 2.
-- Task 3.
+**What to look for:** One or two sentences on how to judge the answer.
 
-## Additional Reads and Link Coverage
+## Is This OK? Academic Honesty
 
-- [Link title](https://example.com) — one line on why it's worth reading.
+### A short, real-life scenario a student might face
+
+**My answer:** Two or three sentences with a clear answer and the reason.
+Rotate the heading each week: `Is This OK? Academic Honesty` or `Is This OK? Privacy`.
