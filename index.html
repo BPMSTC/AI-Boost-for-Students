@@ -19,8 +19,8 @@ title: All issues
         {% for issue in group.items %}
           <li>
             <a href="{{ issue.url | relative_url }}">
-              <span class="num">#{{ issue["Issue Number"] }}</span>
-              <span class="title">{{ issue.Title }}</span>
+              <span class="num">#{{ issue.issue }}</span>
+              <span class="title">{{ issue.title }}{% if issue.this_week %}<small>{{ issue.this_week }}</small>{% endif %}</span>
               <span class="date">{{ issue.date | date: "%b %-d, %Y" }}</span>
             </a>
           </li>

@@ -1,18 +1,38 @@
 ---
 layout: default
 ---
-{% assign issue_name = page.path | split: "/" | last | remove: ".md" %}
-<article class="issue" data-image-dir="{{ '/assets/images/issues/' | append: issue_name | append: '/' | relative_url }}">
+{% assign words = content | strip_html | number_of_words %}
+{% assign minutes = words | divided_by: 200 | plus: 1 %}
+<article class="issue">
   <header class="issue-hero">
     <p class="issue-meta">
-      Issue {{ page["Issue Number"] }} · {{ page.date | date: "%B %-d, %Y" }}{% if page.semester %} · {{ page.semester }}{% endif %}
+      Issue {{ page.issue }} · {{ page.date | date: "%B %-d, %Y" }} · {{ minutes }} min read
     </p>
-    <h1>{{ page.Title }}</h1>
+    <h1>{{ page.title }}</h1>
+    {% if page.this_week %}<p class="this-week"><strong>This week:</strong> {{ page.this_week }}</p>{% endif %}
   </header>
 
+  {% comment %} Wrap each "## Section" and everything under it in a card. {% endcomment %}
   <div class="issue-body">
-    {{ content }}
+    {% assign parts = content | split: "<h2" %}
+    {% for part in parts %}
+      {% if forloop.first %}{{ part }}{% continue %}{% endif %}
+      {% assign kind = "other" %}
+      {% if part contains 'id="the-big-picture' %}{% assign kind = "big-picture" %}
+      {% elsif part contains 'id="level-up' %}{% assign kind = "level-up" %}
+      {% elsif part contains 'id="try-this' %}{% assign kind = "try-this" %}
+      {% elsif part contains 'id="is-this-ok' %}{% assign kind = "is-this-ok" %}
+      {% endif %}
+      <section class="block block-{{ kind }}"><h2{{ part }}</section>
+    {% endfor %}
   </div>
+
+  {% if page.challenge %}
+  <aside class="challenge">
+    <h2>Your Challenge</h2>
+    <p>{{ page.challenge }}</p>
+  </aside>
+  {% endif %}
 
   {% assign sorted = site.issues | sort: "date" %}
   {% for item in sorted %}

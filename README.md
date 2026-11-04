@@ -1,16 +1,27 @@
 # AI Boost for Students
 
-A weekly newsletter recapping the AI topics from our weekly session at Mid-State Technical
-College. One issue per week of the semester, published at the project's GitHub Pages site.
+A short weekly newsletter (about a 3-minute read) recapping the AI topics from our weekly
+session at Mid-State Technical College. One issue per week of the semester, published at the
+project's GitHub Pages site.
+
+Each issue has four sections, one for each goal:
+
+| Section | Goal |
+|---|---|
+| The Big Picture | What's happening in AI and why it matters to you |
+| Level Up | AI acumen: a word of the week, myth vs. fact, or spot the fake |
+| Try This | Using AI effectively: one prompt to copy |
+| Is This OK? | Using AI ethically: academic honesty or privacy |
+
+Plus a one-line "This week" opener and one "Your Challenge" action.
 
 ## Add this week's issue (by hand)
 1. Copy `_templates/issue-template.md` to `_issues/YYYY-MM-DD-short-name.md`
    (for example `_issues/2026-11-11-week-11.md`).
-2. Fill in the front matter and each section. Delete sections you don't need, except
-   Quick Scan, Try This and the two Follow-up sections.
-3. Put any images in `assets/images/issues/YYYY-MM-DD-short-name/`.
-4. Check it: `ruby scripts/check_issue.rb _issues/YYYY-MM-DD-short-name.md`
-5. Commit and push. The site updates in about a minute.
+2. Fill in the front matter and the four sections. Rotate the Level Up and Is This OK?
+   types from last week's.
+3. Check it (it also checks length): `ruby scripts/check_issue.rb _issues/YYYY-MM-DD-short-name.md`
+4. Commit and push. The site updates in about a minute.
 
 ## Add this week's issue (with Claude Code)
 Open the repo in Claude Code and say "new issue" with your session notes. The `new-issue`
