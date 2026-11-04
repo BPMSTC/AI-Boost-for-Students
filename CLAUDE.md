@@ -37,6 +37,7 @@ Artificial Insights newsletter. Don't add faculty sections (Tool Drop, Ed Pulse,
 | `scripts/check_issue.rb` | Validates an issue file before publishing |
 | `.claude/agents/` | Subagents used by the weekly workflow |
 | `.claude/skills/new-issue/` | The weekly "make an issue" workflow |
+| `.claude/skills/weekly-briefing/` | Tuesday news research: a verified list of stories for Brent to pick from |
 
 ## The issue format (do not change it)
 See `_templates/issue-template.md`. `scripts/check_issue.rb` enforces these rules:
@@ -70,6 +71,9 @@ See `_templates/issue-template.md`. `scripts/check_issue.rb` enforces these rule
   (or `bundle exec jekyll serve` after `bundle install`)
 
 ## Workflow rules
+- Every Tuesday at 5:45 AM Central, a scheduled task starts a new session that runs the
+  `weekly-briefing` skill. Brent picks stories from it, holds his session, then replies with
+  his picks and notes in that same session, which runs `new-issue`.
 - Use the `new-issue` skill for each week's issue.
 - Work on a branch and open a pull request. Brent reviews and merges; merging to the default
   branch publishes the issue.
