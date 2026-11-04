@@ -8,6 +8,8 @@ description: Produces this week's short AI Boost for Students newsletter issue f
 ## 1. Gather inputs
 Get these from Brent. Ask only for what is missing:
 - Session notes (topics, links, demos, his opinions). Required.
+- If this follows a Tuesday `weekly-briefing`: which stories he picked (e.g. "2 for Big
+  Picture, 5 for Also This Week"). Use the briefing as extra research input.
 - Session date. Default: today.
 - Semester, e.g. `Fall 2026`. Default: same as the latest issue in `_issues/`.
 - Issue number. Default: latest `issue` number in `_issues/` plus one.
@@ -26,7 +28,8 @@ The file path is `_issues/<YYYY-MM-DD>-<short-name>.md`.
    Never use a photo from a news site.
 
 ## 3. Research
-Run the `news-researcher` subagent with the session notes. Wait for its notes.
+Run the `news-researcher` subagent with the session notes, and Brent's briefing picks with
+their sources if there was a briefing. Wait for its notes.
 
 ## 4. Write
 Run the `issue-writer` subagent with the session notes, research notes, issue number, date,

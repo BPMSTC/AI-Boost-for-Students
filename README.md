@@ -27,6 +27,12 @@ Plus a one-line "This week" opener, one "Your Challenge" action, and an optional
 3. Check it (it also checks length): `ruby scripts/check_issue.rb _issues/YYYY-MM-DD-short-name.md`
 4. Commit and push. The site updates in about a minute.
 
+## Tuesday news briefing (automatic)
+Every Tuesday at 5:45 AM Central, Claude researches the last 7 days of AI news and opens a new
+Claude Code session with 8–10 verified stories to choose from (notification on your phone).
+Reply in that session with your picks and session notes, and it writes the issue. The steps it
+follows are in `.claude/skills/weekly-briefing/SKILL.md`; edit that file to change them.
+
 ## Add this week's issue (with Claude Code)
 Open the repo in Claude Code and say "new issue" with your session notes. The `new-issue`
 skill researches the topics, drafts the issue, checks it and opens a pull request for review.
